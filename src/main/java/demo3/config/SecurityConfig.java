@@ -19,54 +19,46 @@ import demo3.service.CustomUserDetailService;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(
-		securedEnabled = true,
-		jsr250Enabled = true,
-		prePostEnabled = true
-		)
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
+@EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private CustomUserDetailService customUserDetailService;
-	
+
 	@Autowired
 	private JwtAuthenticationEntryPoint unauthorizedHandler;
-	
+
 	@Bean
 	public JwtAuthenticationFilter jwtAuthenticationFilter() {
 		return new JwtAuthenticationFilter();
 	}
-	
+
 	@Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-	
-	
-	@Override
-	public void configure (AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-		authenticationManagerBuilder
-			.userDetailsService(customUserDetailService)
-			.passwordEncoder(passwordEncoder());
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 
-	
+	@Override
+	public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+		authenticationManagerBuilder.userDetailsService(customUserDetailService).passwordEncoder(passwordEncoder());
+	}
+
 	@Bean(name = BeanIds.AUTHENTICATION_MANAGER)
 	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception{
+	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
-	
-	 
-	 @Override
-	    protected void configure(HttpSecurity http) throws Exception {
-		 http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			.and()
-				.authorizeRequests().antMatchers("/api/login","/").permitAll()
-				.anyRequest().authenticated();
-		    
-	        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-	    }
-	
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.cors().and().csrf().disable()
+		.exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+		.and()
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.and().authorizeRequests().antMatchers("/api/login", "/").permitAll()
+		.anyRequest().authenticated();
+		
+		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+	}
+
 }

@@ -13,9 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import demo3.model.Account;
 import demo3.model.Role;
 
-
-public class UserPrincipal implements UserDetails{
-	
+public class UserPrincipal implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 	private int id;
@@ -23,22 +21,21 @@ public class UserPrincipal implements UserDetails{
 	private String username;
 	@JsonIgnore
 	private String password;
-	
+
 	private Collection<? extends GrantedAuthority> authorities;
 
-	
-	
 	public UserPrincipal(int id, String username, String password, Collection<? extends GrantedAuthority> authorities) {
-		
+
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.authorities = authorities;
 	}
-	
+
 	public static UserPrincipal create(Account account) {
 		Set<Role> roles = account.getRole();
-		List<GrantedAuthority> authorities = roles.stream().map(role -> new SimpleGrantedAuthority(role.getRolename())).collect(Collectors.toList());
+		List<GrantedAuthority> authorities = roles.stream().map(role -> new SimpleGrantedAuthority(role.getRolename()))
+				.collect(Collectors.toList());
 		return new UserPrincipal(account.getId_account(), account.getUsername(), account.getPassword(), authorities);
 	}
 
@@ -96,8 +93,5 @@ public class UserPrincipal implements UserDetails{
 	public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
 		this.authorities = authorities;
 	}
-	
-	
- }
-	
 
+}

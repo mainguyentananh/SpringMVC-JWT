@@ -12,7 +12,7 @@ import demo3.model.Account;
 public class AccountService {
 	@Autowired
 	private AccountDao repo;
-	
+
 	public Account getAccountByUsername(String username) {
 		return repo.findByUserName(username);
 	}

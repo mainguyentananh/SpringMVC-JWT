@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Table(name = "Accounts")
 public class Account implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_account")
@@ -27,7 +27,7 @@ public class Account implements java.io.Serializable {
 
 	@Column(name = "password")
 	private String password;
-	
+
 	@OneToMany(mappedBy = "account")
 	private List<Account_Role> account_AR;
 
@@ -72,13 +72,13 @@ public class Account implements java.io.Serializable {
 	public void setAccount_AR(List<Account_Role> account_AR) {
 		this.account_AR = account_AR;
 	}
-	
-	public Set<Role> getRole(){
-		Set<Role> roles = new HashSet<Role>();	
+
+	public Set<Role> getRole() {
+		Set<Role> roles = new HashSet<Role>();
 		for (int i = 0; i < this.getAccount_AR().size(); i++) {
 			roles.add(this.getAccount_AR().get(i).getRole());
 		}
 		return roles;
 	}
-	
+
 }

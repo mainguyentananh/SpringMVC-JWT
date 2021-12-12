@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import demo3.config.JwtTokenProvider;
+import demo3.model.JwtResponse;
 import demo3.model.LoginRequest;
 
 @RestController
@@ -24,32 +25,29 @@ public class LoginController {
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
+
 	@Autowired
 	private JwtTokenProvider tokenProvider;
-	
-	@RequestMapping(value="/login",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+
+	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
 		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),loginRequest.getPassword())
-				);
- 
-	       // SecurityContextHolder.getContext().setAuthentication(authentication);
-	       
-	        if(authentication != null) {
-	        	String bearer = "Bearer ";
-	        	String jwt = tokenProvider.generateToken(authentication);
-	        	return new ResponseEntity<>(bearer+jwt,HttpStatus.OK);
-	        }
-	        
-	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	 }
-	 
-	@RequestMapping(value="/account",method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
-	    public ResponseEntity<?> randomStuff(){
+				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+
+		if (authentication != null) {
+			String bearer = "Bearer";
+			String jwt = tokenProvider.generateToken(authentication);
+			return new ResponseEntity<>(new JwtResponse(jwt, bearer), HttpStatus.OK);
+		}
+
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+
+	@RequestMapping(value = "/account", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<?> randomStuff() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			return new ResponseEntity<>(auth.getPrincipal(),HttpStatus.OK);
-	    }
-	
+		return new ResponseEntity<>(auth.getPrincipal(), HttpStatus.OK);
+	}
+
 }

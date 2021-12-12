@@ -1,19 +1,15 @@
 package demo3.model;
 
-
 public class LoginRequest implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
-	
 
 	private String username;
-	
-	
+
 	private String password;
 
 	public LoginRequest() {
 	}
 
-	
 	public LoginRequest(String username, String password) {
 		this.username = username;
 		this.password = password;

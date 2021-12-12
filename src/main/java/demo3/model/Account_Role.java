@@ -18,11 +18,11 @@ public class Account_Role implements java.io.Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private int id;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "id_role")
 	private Role role;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "id_account")
 	private Account account;

@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Table(name = "Roles")
 public class Role implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_role")
@@ -22,7 +22,7 @@ public class Role implements java.io.Serializable {
 
 	@Column(name = "rolename")
 	private String rolename;
-	
+
 	@OneToMany(mappedBy = "role")
 	private List<Account_Role> role_AR;
 
@@ -58,5 +58,5 @@ public class Role implements java.io.Serializable {
 	public void setRole_AR(List<Account_Role> role_AR) {
 		this.role_AR = role_AR;
 	}
-	
+
 }

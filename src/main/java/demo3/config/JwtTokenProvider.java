@@ -1,6 +1,5 @@
 package demo3.config;
 
-
 import java.util.Date;
 
 import org.apache.log4j.Logger;
@@ -17,20 +16,17 @@ import io.jsonwebtoken.UnsupportedJwtException;
 
 @Service
 public class JwtTokenProvider {
-	private static final Logger logger =  Logger.getLogger(JwtTokenProvider.class);
-	
-	
+	private static final Logger logger = Logger.getLogger(JwtTokenProvider.class);
+
 	private final String jwtSecret = "JWTSuperSecretKey";
-	
+
 	private final int jwtExpirationInMs = 864000000;
-	
-    
+
 	public String generateToken(Authentication authentication) {
 		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 		Date now = new Date();
 		Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
-		
-        
+
 		return Jwts.builder()
 				.setSubject(Long.toString(userPrincipal.getId()))
 				.setIssuedAt(now)
@@ -38,8 +34,7 @@ public class JwtTokenProvider {
 				.signWith(SignatureAlgorithm.HS512, jwtSecret)
 				.compact();
 	}
-	
-   
+
 	public int getUserIdFromJWT(String token) {
 		Claims claims = Jwts.parser()
 				.setSigningKey(jwtSecret)
@@ -48,20 +43,19 @@ public class JwtTokenProvider {
 		return (int) Long.parseLong(claims.getSubject());
 	}
 
-    
 	public boolean validateToken(String authToken) throws SignatureException {
 		try {
 			Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
 			return true;
 		} catch (MalformedJwtException ex) {
-            logger.error("Invalid JWT token");
-        } catch (ExpiredJwtException ex) {
-            logger.error("Expired JWT token");
-        } catch (UnsupportedJwtException ex) {
-            logger.error("Unsupported JWT token");
-        } catch (IllegalArgumentException ex) {
-            logger.error("JWT claims string is empty.");
-        }
+			logger.error("Invalid JWT token");
+		} catch (ExpiredJwtException ex) {
+			logger.error("Expired JWT token");
+		} catch (UnsupportedJwtException ex) {
+			logger.error("Unsupported JWT token");
+		} catch (IllegalArgumentException ex) {
+			logger.error("JWT claims string is empty.");
+		}
 		return false;
 	}
 }
