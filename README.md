@@ -16,7 +16,7 @@
 - Xây dựng Service.
 - Xây dựng Controller
 - Xây dựng Config:
-  - Security Config cấu cho cho Spring Security.
+  - Security Config cấu hình cho cho Spring Security.
   - JwtAuthenticationEntryPoint xử lý lỗi.
   - JwtTokenProvider cung cấp jwt cho client khi authenticated.
   - JwtAuthenticationFilter kiểm tra jwt của client.
