@@ -50,14 +50,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.passwordEncoder(passwordEncoder());
 	}
 
-//	@Bean
-//	public DaoAuthenticationProvider authProvider() {
-//		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//		authProvider.setUserDetailsService(customUserDetailService);
-//		authProvider.setPasswordEncoder(passwordEncoder());
-//		return authProvider;
-//	}
-	
 	
 	@Bean(name = BeanIds.AUTHENTICATION_MANAGER)
 	@Override
@@ -65,7 +57,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		return super.authenticationManagerBean();
 	}
 	
-//	http.cors().and().csrf().disable();	
 	 
 	 @Override
 	    protected void configure(HttpSecurity http) throws Exception {
@@ -74,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.and()
 				.authorizeRequests().antMatchers("/api/login","/").permitAll()
 				.anyRequest().authenticated();
-	        // Thêm một lớp Filter kiểm tra jwt
+		    
 	        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 	    }
 	
