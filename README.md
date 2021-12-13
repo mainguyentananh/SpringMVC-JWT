@@ -22,6 +22,5 @@
   - JwtAuthenticationFilter kiểm tra jwt của client.
   - UserPrincipal chứa thông tin tài khoản đăng nhập. Phải implement UserDetails lại vì Spring Security quản lý các tài khoản thông qua UserDetailsService nạp từ UserDetails.
 ## Kết luận
-- Các bạn xem JWT để biết cách thức hoạt động nhé.
 - Mình cũng tự học nên xây dựng cơ bản và còn nhiều sai sót mong mọi người thông cảm.
 - Chúc mọi người thành công.
