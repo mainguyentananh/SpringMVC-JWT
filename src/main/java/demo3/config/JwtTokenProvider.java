@@ -3,8 +3,10 @@ package demo3.config;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -14,14 +16,18 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 
-@Service
+@Component
+@PropertySource("classpath:jwtconfig.properties")
 public class JwtTokenProvider {
 	private static final Logger logger = Logger.getLogger(JwtTokenProvider.class);
 
-	private final String jwtSecret = "JWTSuperSecretKey";
+	@Value("${jwtSecret}")
+	private String jwtSecret;
+	
+	@Value("${jwtExpirationInMs}")
+	private int jwtExpirationInMs;
 
-	private final int jwtExpirationInMs = 864000000;
-
+	
 	public String generateToken(Authentication authentication) {
 		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 		Date now = new Date();

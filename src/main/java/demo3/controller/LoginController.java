@@ -34,7 +34,7 @@ public class LoginController {
 
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-
+		SecurityContextHolder.getContext().setAuthentication(authentication);
 		if (authentication != null) {
 			String bearer = "Bearer";
 			String jwt = tokenProvider.generateToken(authentication);

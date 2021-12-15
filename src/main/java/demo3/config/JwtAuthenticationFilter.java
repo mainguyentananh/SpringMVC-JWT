@@ -18,9 +18,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import demo3.service.CustomUserDetailService;
 
+
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	private static final Logger logger = Logger.getLogger(JwtAuthenticationFilter.class);
+	
 	@Autowired
 	private JwtTokenProvider tokenProvider;
 
