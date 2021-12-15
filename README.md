@@ -10,7 +10,7 @@
   - `Nếu insert password từ Mysql nhớ lấy password đã được encode insert vào mình có để class test để lấy password encode`.
 ## Nội dung
 - Cấu hình web.xml, spring-servlet, pom.xml.
-- Thêm file application.properties chứa thông tin database, Hibernate và file log4j.properties.  
+- Thêm file application.properties chứa thông tin database Hibernate, jwtconfig.properties cấu hình cho JWT và file log4j.properties.  
 - Xây dựng Model.
 - Xây dựng DAO.
 - Xây dựng Service.
