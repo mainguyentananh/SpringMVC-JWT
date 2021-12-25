@@ -27,7 +27,7 @@ public class JwtTokenProvider {
 	@Value("${jwtExpirationInMs}")
 	private int jwtExpirationInMs;
 
-	
+
 	public String generateToken(Authentication authentication) {
 		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 		Date now = new Date();
@@ -35,6 +35,18 @@ public class JwtTokenProvider {
 
 		return Jwts.builder()
 				.setSubject(Long.toString(userPrincipal.getId()))
+				.setIssuedAt(now)
+				.setExpiration(expiryDate)
+				.signWith(SignatureAlgorithm.HS512, jwtSecret)
+				.compact();
+	}
+	
+	public String generateTokenFromIdAccout(int id) {
+		Date now = new Date();
+		Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
+
+		return Jwts.builder()
+				.setSubject(Long.toString(id))
 				.setIssuedAt(now)
 				.setExpiration(expiryDate)
 				.signWith(SignatureAlgorithm.HS512, jwtSecret)

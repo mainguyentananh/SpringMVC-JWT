@@ -1,8 +1,12 @@
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import java.util.Date;
 
 public class test {
 	public static void main(String[] args) {
-		BCryptPasswordEncoder t = new BCryptPasswordEncoder();
-		System.out.println(t.encode("admin"));
+	
+		
+		Date test = new Date();
+		
+		System.out.println(test.getTime());
+	//	System.out.println(t);
 	}
 }
