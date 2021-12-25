@@ -7,7 +7,7 @@
   - Accounts(id_account, username, password).
   - Roles(id_role, rolename).
   - Account_Role(id,id_account,id_role).
-  - RefreshToken (id_rt,expirydate,refreshtoken,id_account)
+  - RefreshToken (id_rt,expirydate,refreshtoken,id_account).
   - `Nếu insert password từ Mysql nhớ lấy password đã được encode insert vào mình có để class test để lấy password encode`.
 ## Nội dung
 - Cấu hình web.xml, spring-servlet, pom.xml.
